@@ -1,0 +1,7 @@
+parameters:
+#    devilcius_cuaderno19.example.class: devilcius\Cuaderno19Bundle\Example
+
+services:
+#    devilcius_cuaderno19.example:
+#        class: %devilcius_cuaderno19.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
