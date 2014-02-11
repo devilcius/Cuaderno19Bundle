@@ -120,8 +120,8 @@ class Cuaderno19
                 $this->presenter["recNumber"] ++;
                 $this->applicants[$k]["regNumber"] ++;
                 $this->presenter["regNumber"] ++;
-                $this->applicants[$k]["total"]+=$r["amount"];
-                $this->presenter["total"]+=$r["amount"];
+                $this->applicants[$k]["total"]+=number_format($r["amount"], 2, '.', '');
+                $this->presenter["total"]+=number_format($r["amount"], 2, '.', '');
             }
             $remittance.= $this->generateTotalOrdenante($v["nif"], $v["suffix"], $this->convertAmount($this->applicants[$k]["total"]), $this->applicants[$k]["recNumber"], $this->applicants[$k]["regNumber"]);
             $this->presenter["ordNumber"] ++;
