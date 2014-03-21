@@ -18,6 +18,7 @@ class Cuaderno19
     );
     private $applicants = array();
     private $individual = array();
+    private $procedure;
 
     /**
      * 
@@ -28,7 +29,7 @@ class Cuaderno19
      * @param type $branch presenter bank branch
      * @return int presentor id (only one presentor by remittance)
      */
-    public function configurePresentator($nif, $suffix, $name, $bank, $branch)
+    public function configurePresentator($nif, $suffix, $name, $bank, $branch, $procedure)
     {
         $this->presenter["nif"] = strtoupper($nif);
         $this->presenter["suffix"] = strtoupper($suffix);
@@ -39,6 +40,7 @@ class Cuaderno19
         $this->presenter["ordNumber"] = 0;
         $this->presenter["recNumber"] = 0;
         $this->presenter["regNumber"] = 2;
+        $this->procedure = $procedure;
 
         return 0;
     }
@@ -112,7 +114,7 @@ class Cuaderno19
         $remittance.= $this->generatePresenter($this->presenter["nif"], $this->presenter["suffix"], $this->presenter["name"], $this->presenter["bank"], $this->presenter["branch"], date("dmy"));
 
         foreach ($this->applicants as $k => $v) {
-            $remittance.= $this->generateApplicante($v["nif"], $v["suffix"], $v["name"], $v["bank"], $v["branch"], $v["cd"], $v["account"], date("dmy"), date("dmy"), $k + 1);
+            $remittance.= $this->generateApplicant($v["nif"], $v["suffix"], $v["name"], $v["bank"], $v["branch"], $v["cd"], $v["account"], date("dmy"), date("dmy"));
             foreach ($this->individual[$k] as $r) {
                 $remittance.= $this->generateIndividual($v["nif"], $v["suffix"], $r["ref"], $r["name"], $r["bank"], $r["branch"], $r["cd"], $r["account"], $this->convertAmount($r["amount"]), $r["concept"]);
 
@@ -211,7 +213,7 @@ class Cuaderno19
         return $texto;
     }
 
-    private function generateApplicante($nif, $sufijo, $nombre, $entidad, $oficina, $dc, $cuenta, $fecha, $fechaCargo, $procedimiento)
+    private function generateApplicant($nif, $sufijo, $nombre, $entidad, $oficina, $dc, $cuenta, $fecha, $fechaCargo)
     {
         $texto = "5380";
         $texto.= $this->fillLeft($nif, " ", 9);
@@ -224,7 +226,7 @@ class Cuaderno19
         $texto.= $this->fillLeft($dc, 0, 2);
         $texto.= $this->fillLeft($cuenta, 0, 10);
         $texto.= $this->fillLeft("", " ", 8);
-        $texto.= $this->fillLeft($procedimiento, 0, 2);
+        $texto.= $this->fillLeft($this->procedure, 0, 2);
         $texto.= $this->fillLeft("", " ", 10);
         $texto.= $this->fillLeft("", " ", 40);
         $texto.= $this->fillLeft("", " ", 14);
